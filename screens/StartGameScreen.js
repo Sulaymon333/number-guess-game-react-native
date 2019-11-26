@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, Button, TouchableWithoutFeedback, Keyboard, Alert, StyleSheet } from 'react-native';
 import Card from '../components/Card';
 import Input from '../components/Input';
+import NumberContainer from '../components/NumberContainer';
 
 import Colors from '../utils/colors';
 
@@ -36,7 +37,15 @@ const StartGameScreen = () => {
     let confirmedJSX;
 
     if (isValueConfirmed) {
-        confirmedJSX = <Text>The confirmed value: {confirmedValue}</Text>;
+        confirmedJSX = (
+            <Card style={styles.confirmedValueContainer}>
+                <Text>You selected</Text>
+                <NumberContainer>{confirmedValue}</NumberContainer>
+                <View>
+                    <Button title="START GAME" onPress={() => {}} />
+                </View>
+            </Card>
+        );
     }
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
@@ -80,7 +89,6 @@ const styles = StyleSheet.create({
     inputContainer: {
         width: 300,
         maxWidth: '80%',
-        borderRadius: 10,
         alignItems: 'center',
     },
     title: {
@@ -99,5 +107,9 @@ const styles = StyleSheet.create({
     },
     button: {
         width: '40%',
+    },
+    confirmedValueContainer: {
+        marginVertical: 20,
+        alignItems: 'center',
     },
 });

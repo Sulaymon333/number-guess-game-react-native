@@ -10,6 +10,7 @@ export default Card;
 const styles = StyleSheet.create({
     card: {
         backgroundColor: 'white',
+        borderRadius: 10,
         shadowColor: 'black',
         shadowRadius: 6,
         shadowOffset: { width: 0, height: 2 },
