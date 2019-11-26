@@ -7,11 +7,33 @@ import Colors from '../utils/colors';
 
 const StartGameScreen = () => {
     const [enteredValue, setEnteredValue] = useState('');
+    const [confirmedValue, setConfirmedValue] = useState('');
+    const [isValueConfirmed, setIsValueConfirmed] = useState(false);
 
-    const inputHandler = enteredValue => {
+    const handleInput = enteredValue => {
         setEnteredValue(enteredValue.replace(/[^0-9]/g, ''));
     };
 
+    const handleReset = () => {
+        setEnteredValue('');
+        setIsValueConfirmed(false);
+    };
+
+    const handleConfirm = () => {
+        const confirmedValue = parseInt(enteredValue);
+        if (isNaN(confirmedValue) || confirmedValue <= 0 || confirmedValue > 99) {
+            return;
+        }
+        setConfirmedValue(confirmedValue);
+        setIsValueConfirmed(true);
+        setEnteredValue('');
+    };
+
+    let confirmedJSX;
+
+    if (isValueConfirmed) {
+        confirmedJSX = <Text>The confirmed value: {confirmedValue}</Text>;
+    }
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.screen}>
@@ -24,18 +46,19 @@ const StartGameScreen = () => {
                         keyboardType="number-pad"
                         maxLength={2}
                         keyboardAppearance="dark"
-                        onChangeText={inputHandler}
+                        onChangeText={handleInput}
                         value={enteredValue}
                     />
                     <View style={styles.buttonsContainer}>
                         <View style={styles.button}>
-                            <Button title="Reset" color={Colors.accentColor} onPress={() => {}} />
+                            <Button title="Reset" color={Colors.accentColor} onPress={handleReset} />
                         </View>
                         <View style={styles.button}>
-                            <Button title="Confirm" color={Colors.primaryColor} onPress={() => {}} />
+                            <Button title="Confirm" color={Colors.primaryColor} onPress={handleConfirm} />
                         </View>
                     </View>
                 </Card>
+                {confirmedJSX}
             </View>
         </TouchableWithoutFeedback>
     );
