@@ -6,7 +6,7 @@ import NumberContainer from '../components/NumberContainer';
 
 import Colors from '../utils/colors';
 
-const StartGameScreen = () => {
+const StartGameScreen = ({ handleStartGame }) => {
     const [enteredValue, setEnteredValue] = useState('');
     const [confirmedValue, setConfirmedValue] = useState('');
     const [isValueConfirmed, setIsValueConfirmed] = useState(false);
@@ -42,7 +42,7 @@ const StartGameScreen = () => {
                 <Text>You selected</Text>
                 <NumberContainer>{confirmedValue}</NumberContainer>
                 <View>
-                    <Button title="START GAME" onPress={() => {}} />
+                    <Button title="START GAME" onPress={() => handleStartGame(confirmedValue)} />
                 </View>
             </Card>
         );
