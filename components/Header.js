@@ -23,8 +23,9 @@ const styles = StyleSheet.create({
         backgroundColor: Colors.primaryColor,
     },
     headerTitle: {
-        fontSize: 18,
-        fontWeight: 'bold',
+        fontSize: 20,
         color: 'white',
+        fontFamily: 'open-sans-bold',
+        fontWeight: 'bold',
     },
 });
