@@ -5,6 +5,8 @@ import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
 
 import Colors from '../utils/colors';
+import TitleText from '../components/TitleText';
+import BodyText from '../components/BodyText';
 
 const StartGameScreen = ({ handleStartGame }) => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -50,9 +52,9 @@ const StartGameScreen = ({ handleStartGame }) => {
     return (
         <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
             <View style={styles.screen}>
-                <Text style={styles.title}>Start a New Game</Text>
+                <TitleText style={styles.title}>Start a New Game</TitleText>
                 <Card style={styles.inputContainer}>
-                    <Text>Select a Number</Text>
+                    <BodyText>Select a Number</BodyText>
                     <Input
                         style={styles.input}
                         blurOnSubmit
@@ -92,8 +94,9 @@ const styles = StyleSheet.create({
         alignItems: 'center',
     },
     title: {
-        fontSize: 20,
+        fontSize: 18,
         marginVertical: 10,
+        fontFamily: 'open-sans-bold',
     },
     buttonsContainer: {
         width: '100%',
