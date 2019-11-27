@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 
 import NumberContainer from '../components/NumberContainer';
@@ -18,11 +18,18 @@ const generateRandom = (min, max, exclude) => {
     }
 };
 
-const GameScreen = ({ userConfirmedValue }) => {
+const GameScreen = ({ userConfirmedValue, handleGameOver }) => {
     const [currentGuess, setCurrentGuess] = useState(generateRandom(1, 100, userConfirmedValue));
+    const [guessRounds, setGuessRounds] = useState(0);
 
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
+
+    useEffect(() => {
+        if (currentGuess === userConfirmedValue) {
+            handleGameOver(guessRounds);
+        }
+    }, [currentGuess, userConfirmedValue, handleGameOver]);
 
     const nextGuessHandler = direction => {
         if (
@@ -39,6 +46,7 @@ const GameScreen = ({ userConfirmedValue }) => {
         }
         const nextNumber = generateRandom(currentLow.current, currentHigh.current, currentGuess);
         setCurrentGuess(nextNumber);
+        setGuessRounds(currentGuessRounds => currentGuessRounds + 1);
     };
 
     return (
