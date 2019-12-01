@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, Button, TouchableWithoutFeedback, Keyboard, Alert, StyleSheet } from 'react-native';
+
 import Card from '../components/Card';
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
-
-import Colors from '../utils/colors';
 import TitleText from '../components/TitleText';
 import BodyText from '../components/BodyText';
+
+import Colors from '../utils/colors';
 
 const StartGameScreen = ({ handleStartGame }) => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -87,26 +88,25 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         padding: 10,
     },
-
+    title: {
+        fontSize: 18,
+        marginVertical: 10,
+        fontFamily: 'open-sans-bold',
+    },
     inputContainer: {
         width: 300,
         maxWidth: '80%',
         alignItems: 'center',
     },
-    title: {
-        fontSize: 18,
-        marginVertical: 10,
-        fontFamily: 'open-sans-bold',
+    input: {
+        width: 50,
+        textAlign: 'center',
     },
     buttonsContainer: {
         width: '100%',
         flexDirection: 'row',
         justifyContent: 'space-between',
         paddingHorizontal: 15,
-    },
-    input: {
-        width: 50,
-        textAlign: 'center',
     },
     button: {
         width: '40%',

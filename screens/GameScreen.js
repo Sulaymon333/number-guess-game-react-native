@@ -10,7 +10,8 @@ const generateRandom = (min, max, exclude) => {
     // incase we have float number (This is not absolutely required since we replace non digit with '' already)
     min = Math.ceil(min);
     max = Math.floor(max);
-    const randomNumber = Math.floor(Math.random() * (max - min) + min); // excludes max value
+    const randomNumber = Math.floor(Math.random() * (max - min) + min);
+    // excludes max value
     if (randomNumber === exclude) {
         return generateRandom(min, max, exclude); // recursion
     } else {
@@ -51,7 +52,7 @@ const GameScreen = ({ userConfirmedValue, handleGameOver }) => {
 
     return (
         <View style={styles.screen}>
-            <Text>Your Phone's Guess</Text>
+            <Text>Your Phone Guessed</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
                 <Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
