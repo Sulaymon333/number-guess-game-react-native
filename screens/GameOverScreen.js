@@ -4,6 +4,7 @@ import { View, Text, Button, Image, StyleSheet } from 'react-native';
 import TitleText from '../components/TitleText';
 import BodyText from '../components/BodyText';
 import Colors from '../utils/colors';
+import MainButton from '../components/MainButton';
 
 const GameOverScreen = ({ rounds, userConfirmedValue, handleStartGame }) => {
     return (
@@ -18,7 +19,7 @@ const GameOverScreen = ({ rounds, userConfirmedValue, handleStartGame }) => {
                     <Text style={styles.highlight}>{userConfirmedValue}</Text>.
                 </BodyText>
             </View>
-            <Button title="NEW GAME" onPress={() => handleStartGame()} />
+            <MainButton handlePress={() => handleStartGame()}>NEW GAME</MainButton>
         </View>
     );
 };
@@ -54,6 +55,6 @@ const styles = StyleSheet.create({
     },
     highlight: {
         color: Colors.primaryColor,
-        fontWeight: 'bold',
+        fontFamily: 'open-sans-bold',
     },
 });

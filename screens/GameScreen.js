@@ -3,6 +3,7 @@ import { View, Text, Button, Alert, StyleSheet } from 'react-native';
 
 import NumberContainer from '../components/NumberContainer';
 import Card from '../components/Card';
+import MainButton from '../components/MainButton';
 
 const generateRandom = (min, max, exclude) => {
     // exclude is the value confirmed by the user, the device is not allowed to return the user confirmed value as the random guess for the first time at least.
@@ -55,8 +56,8 @@ const GameScreen = ({ userConfirmedValue, handleGameOver }) => {
             <Text>Your Phone Guessed</Text>
             <NumberContainer>{currentGuess}</NumberContainer>
             <Card style={styles.buttonContainer}>
-                <Button title="LOWER" onPress={nextGuessHandler.bind(this, 'lower')} />
-                <Button title="GREATER" onPress={() => nextGuessHandler('greater')} />
+                <MainButton handlePress={nextGuessHandler.bind(this, 'lower')}>LOWER</MainButton>
+                <MainButton handlePress={() => nextGuessHandler('greater')}>GREATER</MainButton>
             </Card>
         </View>
     );
@@ -73,8 +74,8 @@ const styles = StyleSheet.create({
     buttonContainer: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        width: 300,
-        maxWidth: '80%',
+        width: 400,
+        maxWidth: '90%',
         marginVertical: 20,
     },
 });

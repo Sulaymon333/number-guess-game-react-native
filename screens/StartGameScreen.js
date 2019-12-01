@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import { View, Text, Button, TouchableWithoutFeedback, Keyboard, Alert, StyleSheet } from 'react-native';
 
+import Colors from '../utils/colors';
+
 import Card from '../components/Card';
 import Input from '../components/Input';
 import NumberContainer from '../components/NumberContainer';
 import TitleText from '../components/TitleText';
 import BodyText from '../components/BodyText';
-
-import Colors from '../utils/colors';
+import MainButton from '../components/MainButton';
 
 const StartGameScreen = ({ handleStartGame }) => {
     const [enteredValue, setEnteredValue] = useState('');
@@ -44,9 +45,7 @@ const StartGameScreen = ({ handleStartGame }) => {
             <Card style={styles.confirmedValueContainer}>
                 <Text>You selected</Text>
                 <NumberContainer>{confirmedValue}</NumberContainer>
-                <View>
-                    <Button title="START GAME" onPress={() => handleStartGame(confirmedValue)} />
-                </View>
+                <MainButton handlePress={() => handleStartGame(confirmedValue)}>START GAME</MainButton>
             </Card>
         );
     }
