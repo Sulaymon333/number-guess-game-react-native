@@ -45,6 +45,20 @@ const GameScreen = ({ userConfirmedValue, handleGameOver }) => {
     const [currentGuess, setCurrentGuess] = useState(initialGuess);
     // const [guessRounds, setGuessRounds] = useState(0);
     const [pastGuesses, setPastGuesses] = useState([initialGuess.toString()]);
+    const [deviceWidth, setDeviceWidth] = useState(Dimensions.get('window').width);
+    const [deviceHeight, setDeviceHeight] = useState(Dimensions.get('window').height);
+
+    useEffect(() => {
+        const updateLayout = () => {
+            setDeviceWidth(Dimensions.get('window').width);
+            setDeviceHeight(Dimensions.get('window').height);
+        };
+        Dimensions.addEventListener('change', updateLayout);
+
+        return () => {
+            Dimensions.removeEventListener('change', updateLayout);
+        };
+    });
 
     const currentLow = useRef(1);
     const currentHigh = useRef(100);
@@ -75,8 +89,35 @@ const GameScreen = ({ userConfirmedValue, handleGameOver }) => {
     };
 
     listContainerStyle = styles.listContainer;
-    if (Dimensions.get('window').width < 350) {
+    if (deviceWidth < 350) {
         listContainerStyle = styles.listContainerBig;
+    }
+
+    if (deviceHeight < 500) {
+        return (
+            <ScrollView>
+                <View style={styles.screen}>
+                    <Text>Your Phone Guessed</Text>
+                    <Card style={styles.buttonContainerHorizontal}>
+                        <MainButton handlePress={nextGuessHandler.bind(this, 'lower')}>
+                            <Ionicons name="md-remove" size={24} color="white" />
+                        </MainButton>
+                        <NumberContainer>{currentGuess}</NumberContainer>
+                        <MainButton handlePress={() => nextGuessHandler('greater')}>
+                            <Ionicons name="md-add" size={24} color="white" />
+                        </MainButton>
+                    </Card>
+                    <View style={listContainerStyle}>
+                        <FlatList
+                            contentContainerStyle={styles.list}
+                            keyExtractor={item => item}
+                            data={pastGuesses}
+                            renderItem={renderListItem.bind(null, pastGuesses.length)}
+                        />
+                    </View>
+                </View>
+            </ScrollView>
+        );
     }
 
     return (
@@ -123,6 +164,14 @@ const styles = StyleSheet.create({
         maxWidth: '90%',
         marginVertical: 20,
         marginVertical: Dimensions.get('window').height > 600 ? 20 : 5,
+    },
+    buttonContainerHorizontal: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        width: '80%',
+        marginVertical: 15,
+        paddingVertical: 7,
     },
     listContainer: {
         flex: 1,
