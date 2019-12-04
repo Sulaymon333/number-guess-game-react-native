@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { View, Text, Alert, ScrollView, FlatList, StyleSheet } from 'react-native';
+import { View, Text, Alert, ScrollView, FlatList, Dimensions, StyleSheet } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 
 import NumberContainer from '../components/NumberContainer';
@@ -74,6 +74,11 @@ const GameScreen = ({ userConfirmedValue, handleGameOver }) => {
         setPastGuesses(currentPastGuesses => [nextNumber.toString(), ...currentPastGuesses]);
     };
 
+    listContainerStyle = styles.listContainer;
+    if (Dimensions.get('window').width < 350) {
+        listContainerStyle = styles.listContainerBig;
+    }
+
     return (
         <View style={styles.screen}>
             <Text>Your Phone Guessed</Text>
@@ -86,7 +91,7 @@ const GameScreen = ({ userConfirmedValue, handleGameOver }) => {
                     <Ionicons name="md-add" size={24} color="white" />
                 </MainButton>
             </Card>
-            <View style={styles.listContainer}>
+            <View style={listContainerStyle}>
                 {/*
                     <ScrollView contentContainerStyle={styles.list}>
                     {pastGuesses.map((pastGuess, index) => renderListItem(pastGuess, pastGuesses.length - index))}
@@ -117,10 +122,15 @@ const styles = StyleSheet.create({
         width: 400,
         maxWidth: '90%',
         marginVertical: 20,
+        marginVertical: Dimensions.get('window').height > 600 ? 20 : 5,
     },
     listContainer: {
         flex: 1,
         width: '80%',
+    },
+    listContainerBig: {
+        flex: 1,
+        width: '90%',
     },
     list: {
         flexGrow: 1,

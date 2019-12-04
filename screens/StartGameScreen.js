@@ -109,7 +109,6 @@ const styles = StyleSheet.create({
         paddingHorizontal: 15,
     },
     button: {
-        width: '40%',
         width: Dimensions.get('window').width / 4,
     },
     confirmedValueContainer: {
