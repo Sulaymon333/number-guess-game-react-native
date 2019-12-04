@@ -1,5 +1,16 @@
-import React, { useState } from 'react';
-import { View, Text, Button, TouchableWithoutFeedback, Keyboard, Alert, Dimensions, StyleSheet } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import {
+    View,
+    Text,
+    Button,
+    ScrollView,
+    TouchableWithoutFeedback,
+    Keyboard,
+    KeyboardAvoidingView,
+    Alert,
+    Dimensions,
+    StyleSheet,
+} from 'react-native';
 
 import Colors from '../utils/colors';
 
@@ -14,6 +25,17 @@ const StartGameScreen = ({ handleStartGame }) => {
     const [enteredValue, setEnteredValue] = useState('');
     const [confirmedValue, setConfirmedValue] = useState('');
     const [isValueConfirmed, setIsValueConfirmed] = useState(false);
+    const [buttonWidth, setButtonWidth] = useState(Dimensions.get('window').width / 4);
+
+    useEffect(() => {
+        const updateButtonWidth = () => {
+            setButtonWidth(Dimensions.get('window').width / 4);
+        };
+        Dimensions.addEventListener('change', updateButtonWidth);
+
+        // clean up - ensure only one event listener at any point in time
+        return () => Dimensions.removeEventListener('change', updateButtonWidth);
+    });
 
     const handleInput = enteredValue => {
         setEnteredValue(enteredValue.replace(/[^0-9]/g, ''));
@@ -50,32 +72,36 @@ const StartGameScreen = ({ handleStartGame }) => {
         );
     }
     return (
-        <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
-            <View style={styles.screen}>
-                <TitleText style={styles.title}>Start a New Game</TitleText>
-                <Card style={styles.inputContainer}>
-                    <BodyText>Select a Number</BodyText>
-                    <Input
-                        style={styles.input}
-                        blurOnSubmit
-                        keyboardType="number-pad"
-                        maxLength={2}
-                        keyboardAppearance="dark"
-                        onChangeText={handleInput}
-                        value={enteredValue}
-                    />
-                    <View style={styles.buttonsContainer}>
-                        <View style={styles.button}>
-                            <Button title="Reset" color={Colors.accentColor} onPress={handleReset} />
-                        </View>
-                        <View style={styles.button}>
-                            <Button title="Confirm" color={Colors.primaryColor} onPress={handleConfirm} />
-                        </View>
+        <ScrollView>
+            <KeyboardAvoidingView behavior="position" keyboardVerticalOffset={60}>
+                <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+                    <View style={styles.screen}>
+                        <TitleText style={styles.title}>Start a New Game</TitleText>
+                        <Card style={styles.inputContainer}>
+                            <BodyText>Select a Number</BodyText>
+                            <Input
+                                style={styles.input}
+                                blurOnSubmit
+                                keyboardType="number-pad"
+                                maxLength={2}
+                                keyboardAppearance="dark"
+                                onChangeText={handleInput}
+                                value={enteredValue}
+                            />
+                            <View style={styles.buttonsContainer}>
+                                <View style={{ width: buttonWidth }}>
+                                    <Button title="Reset" color={Colors.accentColor} onPress={handleReset} />
+                                </View>
+                                <View style={{ width: buttonWidth }}>
+                                    <Button title="Confirm" color={Colors.primaryColor} onPress={handleConfirm} />
+                                </View>
+                            </View>
+                        </Card>
+                        {confirmedJSX}
                     </View>
-                </Card>
-                {confirmedJSX}
-            </View>
-        </TouchableWithoutFeedback>
+                </TouchableWithoutFeedback>
+            </KeyboardAvoidingView>
+        </ScrollView>
     );
 };
 
