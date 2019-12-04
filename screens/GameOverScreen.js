@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, Button, Image, StyleSheet } from 'react-native';
+import { View, Text, Image, ScrollView, Dimensions, StyleSheet } from 'react-native';
 
 import TitleText from '../components/TitleText';
 import BodyText from '../components/BodyText';
@@ -8,19 +8,21 @@ import MainButton from '../components/MainButton';
 
 const GameOverScreen = ({ rounds, userConfirmedValue, handleStartGame }) => {
     return (
-        <View style={styles.screen}>
-            <TitleText>The game is over!</TitleText>
-            <View style={styles.imageContainer}>
-                <Image style={styles.image} source={require('../assets/success.jpg')} resizeMode="cover" />
+        <ScrollView>
+            <View style={styles.screen}>
+                <TitleText>The game is over!</TitleText>
+                <View style={styles.imageContainer}>
+                    <Image style={styles.image} source={require('../assets/success.jpg')} resizeMode="cover" />
+                </View>
+                <View style={styles.summaryContainer}>
+                    <BodyText style={styles.summaryText}>
+                        It took your phone <Text style={styles.highlight}>{rounds}</Text> rounds to guess the number{' '}
+                        <Text style={styles.highlight}>{userConfirmedValue}</Text>.
+                    </BodyText>
+                </View>
+                <MainButton handlePress={() => handleStartGame()}>NEW GAME</MainButton>
             </View>
-            <View style={styles.summaryContainer}>
-                <BodyText style={styles.summaryText}>
-                    It took your phone <Text style={styles.highlight}>{rounds}</Text> rounds to guess the number{' '}
-                    <Text style={styles.highlight}>{userConfirmedValue}</Text>.
-                </BodyText>
-            </View>
-            <MainButton handlePress={() => handleStartGame()}>NEW GAME</MainButton>
-        </View>
+        </ScrollView>
     );
 };
 
@@ -36,9 +38,12 @@ const styles = StyleSheet.create({
         width: 200,
         height: 200,
         borderRadius: 100,
+        width: Dimensions.get('window').width * 0.6,
+        height: Dimensions.get('window').width * 0.6,
+        borderRadius: (Dimensions.get('window').width * 0.6) / 2,
         borderWidth: 2,
         borderColor: '#777',
-        marginVertical: 25,
+        marginVertical: Dimensions.get('window').height / 30,
         overflow: 'hidden',
     },
     image: {
@@ -47,11 +52,11 @@ const styles = StyleSheet.create({
     },
     summaryContainer: {
         marginHorizontal: 30,
-        marginVertical: 15,
+        marginVertical: Dimensions.get('window').height / 60,
     },
     summaryText: {
         textAlign: 'center',
-        fontSize: 18,
+        fontSize: Dimensions.get('window').height < 400 ? 16 : 18,
     },
     highlight: {
         color: Colors.primaryColor,
